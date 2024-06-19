@@ -1,7 +1,5 @@
 "use client"
 
-import { Plus } from "lucide-react"
-import { Button } from "./ui/button"
 import NoteElement from "./note-components/note-element"
 import { useState, useEffect } from "react"
 import NoteButton from "./note-components/note-button"
@@ -18,6 +16,7 @@ const NotesProvider = () => {
 
     const [render,setRender] = useState(true)
     const [activeNotes, setActiveNotes] = useState([Husk])
+
     useEffect(() => {
         if (render == true){
             setRender(false)
@@ -65,7 +64,7 @@ const NotesProvider = () => {
                     Note.display = "minimized"
                 }
             })
-            newNotes.push({...Husk, display:"normal", Title:"New Note"})
+            newNotes.push({...Husk, display:"normal", Title:"", status:"new"})
             setActiveNotes(newNotes)
             setRender(true)
         },
@@ -77,20 +76,20 @@ const NotesProvider = () => {
 
     return (
         <div className="absolute w-full h-full top-0">
-            <div className="relative w-full max-w-full min-h-full max-h-full overflow-y-scroll flex justify-center items-center p-2 gap-2 flex-wrap">
+            <div className="relative w-full max-w-full min-h-full max-h-full h-full overflow-y-scroll flex justify-center items-center gap-2 flex-wrap">
                 {activeNotes.map((Note,key) => {
-                    if (Note.display == "normal"){
-                        return <NoteElement key={key} Title={Note.Title} Text={Note.Text} index={key} Toggle={Toggle}/>
+                    if (Note.display != "minimized"){
+                        return <NoteElement key={key} Notes={activeNotes} setNotes={setActiveNotes} index={key} Toggle={Toggle}/>
                     }
                 })}
-                <div className="fixed bottom-2 right-2 w-full flex justify-end gap-2">
+                <div className="fixed bottom-2 right-2 w-full h-10 flex justify-end gap-2">
                     {activeNotes.map((Note,key) => {
                         if (Note.display == "minimized"){
                             return (<div key={key}
-                                    className="border flex items-center bg-accent rounded-xl px-2"
+                                    className="border flex items-center bg-accent rounded-xl px-2 h-full aspect-[3/1] overflow-hidden hover:cursor-pointer"
                                     onClick={() => {Toggle.normalize(key)}}
                                     >
-                                        <p>{Note.Title}</p>
+                                        <p>{Note.Title == "" ? "Empty Note" : Note.Title}</p>
                                         
                                     </div>)
                         }
