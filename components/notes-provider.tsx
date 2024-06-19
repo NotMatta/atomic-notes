@@ -4,6 +4,7 @@ import { Plus } from "lucide-react"
 import { Button } from "./ui/button"
 import NoteElement from "./note-components/note-element"
 import { useState, useEffect } from "react"
+import NoteButton from "./note-components/note-button"
 
 const NotesProvider = () => {
     const Husk = {
@@ -17,12 +18,12 @@ const NotesProvider = () => {
 
     const [render,setRender] = useState(true)
     const [activeNotes, setActiveNotes] = useState([Husk])
-
     useEffect(() => {
         if (render == true){
             setRender(false)
         }
-    },[render])
+    },[render,activeNotes])
+
     const Toggle = {
         minimize : (index:number) => {
             let newNotes = activeNotes
@@ -56,8 +57,22 @@ const NotesProvider = () => {
             })
             setActiveNotes(newNotes)
             setRender(true)
+        },
+        add: () => {
+            let newNotes = activeNotes
+            newNotes.map((Note) => {
+                if(Note.display != "minimized"){
+                    Note.display = "minimized"
+                }
+            })
+            newNotes.push({...Husk, display:"normal", Title:"New Note"})
+            setActiveNotes(newNotes)
+            setRender(true)
+        },
+        closeAll: () => {
+            setActiveNotes([])
+            setRender(true)
         }
-
     }
 
     return (
@@ -80,20 +95,7 @@ const NotesProvider = () => {
                                     </div>)
                         }
                     })}
-                    <Button size="icon" className="rounded-full"
-                            onClick={() => {
-                                let newNotes = activeNotes
-                                newNotes.map((Note,i) => {
-                                    if(Note.display != "minimized"){
-                                        Note.display = "minimized"
-                                    }
-                                })
-                                newNotes.push({...Husk, display:"normal", Title:"New Note"})
-                                setActiveNotes(newNotes)
-
-                                setRender(true)
-                            }}
-                    ><Plus/></Button>
+                <NoteButton Toggle={Toggle} isActive={activeNotes.length != 0}/>
                 </div>
             </div>
         </div>
