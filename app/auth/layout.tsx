@@ -1,3 +1,5 @@
+import { ModeToggle } from "@/components/mode-toggle"
+
 const Layout = ({children} : {children:React.ReactNode}) => {
     return (
         <div className="w-full h-full flex">
@@ -12,6 +14,7 @@ const Layout = ({children} : {children:React.ReactNode}) => {
             <div className="border w-2/5 bg-accent flex justify-center items-center">
                 {children} 
             </div>
+            <div className="absolute bottom-2 right-2"><ModeToggle/></div>
         </div>
     )
 }
