@@ -5,7 +5,7 @@ const Layout = ({children}:{children: React.ReactNode}) => {
     return (
         <div className="w-full h-full flex flex-col">
             <NavBar/>
-            <div className="relative w-full h-full">
+            <div className="relative w-full h-full overflow-hidden">
                 {children}
                 <NotesProvider/>
             </div>

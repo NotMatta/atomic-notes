@@ -5,7 +5,7 @@ const NoteElement = ({Notes,setNotes,index,Toggle}:any) => {
 
     return (
         <div 
-            className={"relative bg-background p-4 duration-200 " + (Notes[index].display == "normal"? 'w-4/5 border min-h-[500px] h-[500px] max-h-[650px] rounded-xl' : "w-full h-full z-30")}>
+            className={"relative bg-background p-4 duration-200 flex flex-col " + (Notes[index].display == "normal"? 'w-4/5 border min-h-[500px] h-[500px] max-h-[650px] rounded-xl' : "w-full h-full")}>
             <div className="absolute top-2 right-2">
                 <Button
                 size="icon" className="bg-transparent border-none hover:bg-transparent text-primary"
@@ -36,7 +36,7 @@ const NoteElement = ({Notes,setNotes,index,Toggle}:any) => {
                     }
                 }))}
            />
-           <textarea className="focus-visible:outline-none bg-transparent w-full min-h-[400px] max-h-[550px]" placeholder="Text here"
+           <textarea className="focus-visible:outline-none bg-transparent w-full h-full" placeholder="Text here"
                 value={Notes[index].Text}
                 onChange={(e) => setNotes(Notes.map((el,i) => {
                     if (i == index){
