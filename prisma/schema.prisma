@@ -1,0 +1,36 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "mysql"
+        url      = env("DATABASE_URL")
+}
+
+model Vault{
+    id                  Int @id @default(autoincrement())
+    vaultName           String @db.VarChar(10) @unique
+    vaultPassword       String 
+    Notes               Note[]
+    Tags                Tag[]
+}
+
+model Note{
+    id                  Int @id @default(autoincrement())
+    noteTitle           String @db.VarChar(15)
+    noteText            String @db.Text
+    creationDate        DateTime @default(now())
+    modificationDate    DateTime @default(now())
+    tagId               Int
+    vaultId             Int
+    vault               Vault @relation(fields: [vaultId], references: [id], onDelete: Cascade)
+    tag                 Tag   @relation(fields: [tagId], references: [id], onDelete: Cascade)
+}
+
+model Tag{
+    id                  Int @id @default(autoincrement())
+    tagTitle            String @db.VarChar(10)
+    vaultId             Int
+    vault               Vault @relation(fields: [vaultId], references: [id],onDelete:Cascade)
+    Notes               Note[]
+}

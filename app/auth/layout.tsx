@@ -8,7 +8,7 @@ const Layout = ({children} : {children:React.ReactNode}) => {
                     Atomic Notes
                 </h1>
                 <h3>
-                    One place for all your notes
+                    One place for all your notes (for a price ofc)
                 </h3>
             </div>
             <div className="border w-2/5 bg-accent flex justify-center items-center">

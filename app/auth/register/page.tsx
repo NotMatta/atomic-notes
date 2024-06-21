@@ -8,7 +8,7 @@ const RegisterPage = () => {
             <input type="email" className="col-span-3 bg-transparent outline-none border-b border-b-accent" placeholder="Type email here.."/>
             <label >Password:</label>
             <input type="password" className="col-span-3 bg-transparent outline-none border-b border-b-accent" placeholder="Type password here.."/>
-            <label >Confirm Password:</label>
+            <label >Verification:</label>
             <input type="password" className="col-span-3 bg-transparent outline-none border-b border-b-accent" placeholder="Type password again here.."/>
             <br/>
             <Button className="font-bold col-span-2">Sign Up</Button>
