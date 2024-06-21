@@ -15,7 +15,7 @@ export const POST = async (req:Request) => {
         return Response.json({msg: "Wrong Password"})
     }
     const payload = {
-        vaultid : Vault.id,
+        vaultId : Vault.id,
         vaultName
     }
     const expiration = 3600 * 12
