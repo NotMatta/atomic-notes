@@ -22,11 +22,23 @@ const tokenVerification = async (token:string) => {
 }
 
 const getParams = (req:Request) => {
-    const params = req.url.split("?")[1].split("&")
+    console.log(req.url)
+    const params = decodeURIComponent(req.url).split("?")[1].split("&")
     let seperateParams : any = {}
     params.map((param) => {
-        const paramName = decodeURIComponent(param.split("=")[0])
-        const paramValue = decodeURIComponent(param.split("=")[1])
+        const paramName = param.split("=")[0]
+        const paramValue = param.split("=")[1]
+        seperateParams[paramName] = paramValue
+    })
+    return seperateParams
+}
+
+const getURLParams = (url: any) => {
+    const params = decodeURIComponent(url).split("&")
+    let seperateParams : any = {}
+    params.map((param) => {
+        const paramName = param.split("=")[0]
+        const paramValue = param.split("=")[1]
         seperateParams[paramName] = paramValue
     })
     return seperateParams
@@ -35,5 +47,6 @@ const getParams = (req:Request) => {
 export {
     authVerification,
     tokenVerification,
-    getParams
+    getParams,
+    getURLParams
 }
