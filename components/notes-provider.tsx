@@ -5,6 +5,7 @@ import { useState, useEffect, useContext } from "react"
 import NoteButton from "./note-components/note-button"
 import axios from "axios"
 import NotesContext from "./note-components/notesContext"
+import RenderContext from "./note-components/renderContext"
 
 const NotesProvider = ({vaultSession} : any) => {
     const Husk = {
@@ -16,8 +17,8 @@ const NotesProvider = ({vaultSession} : any) => {
     }
     
 
-    const [render,setRender] = useState(true)
-    const {activeNotes, setActiveNotes} = useContext(NotesContext)
+    const {render,setRender} = useContext(RenderContext)
+    const {activeNotes, setActiveNotes} : any = useContext(NotesContext)
     const [isEditing, setEditing] = useState(false)
     const [vaultTags,setVaultTags] : any = useState([])
     const [isFull, setFull] = useState(false)
@@ -38,6 +39,7 @@ const NotesProvider = ({vaultSession} : any) => {
             setVaultTags(vaultSession.vaultTags)
         }
     },[render,activeNotes,vaultSession])
+    
 
     const HandleSave = async () => {
         const token = vaultSession.token
@@ -51,6 +53,7 @@ const NotesProvider = ({vaultSession} : any) => {
                 tagId: vaultTags[note.tagIndex].id
             }):
                 notesToUpdate.push({
+                noteId: note.id,
                 noteTitle: note.noteTitle,
                 noteText: note.noteText,
                 tagId: vaultTags[note.tagIndex].id
@@ -112,7 +115,7 @@ const NotesProvider = ({vaultSession} : any) => {
                     Note.display = "minimized"
                 }
             })
-            newNotes.push({...Husk, display:"normal", noteTitle:"",noteText:"", status:"new"})
+            newNotes.push({...Husk,id: -1, display:"normal", noteTitle:"",noteText:"", status:"new"})
             setActiveNotes(newNotes)
             setRender(true)
         },
