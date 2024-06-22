@@ -1,9 +1,10 @@
 "use client"
 
 import NoteElement from "./note-components/note-element"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useContext } from "react"
 import NoteButton from "./note-components/note-button"
 import axios from "axios"
+import NotesContext from "./note-components/notesContext"
 
 const NotesProvider = ({vaultSession} : any) => {
     const Husk = {
@@ -16,7 +17,7 @@ const NotesProvider = ({vaultSession} : any) => {
     
 
     const [render,setRender] = useState(true)
-    const [activeNotes, setActiveNotes] = useState([Husk])
+    const {activeNotes, setActiveNotes} = useContext(NotesContext)
     const [isEditing, setEditing] = useState(false)
     const [vaultTags,setVaultTags] : any = useState([])
     const [isFull, setFull] = useState(false)

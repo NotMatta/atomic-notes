@@ -10,11 +10,9 @@ const GET = async (req: Request) => {
     if(!decoded){
         return Response.json({msg: "Unvalid token"})
     }
-    console.log(req.url)
     const  params = getParams(req)
     let Notes = []
     const key = decodeURIComponent(params.noteTitle)
-    console.log(key)
     if (params.tagId == "any"){
         Notes = await prisma.note.findMany({
             where: {
