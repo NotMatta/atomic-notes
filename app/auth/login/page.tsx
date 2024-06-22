@@ -17,6 +17,10 @@ const LoginPage = () => {
         const res = await axios.post("/api/auth/login",data)
         alert(res.data.msg)
         if (res.data.token){
+            const res2 = await axios.get("/api/tag",{headers:{Authorization : ("Bearer "+ res.data.token)}})
+            console.log(res2.data)
+            localStorage.setItem("vaultTags",JSON.stringify(res2.data.Tags))
+            localStorage.setItem("vaultName",JSON.stringify(data.vaultName))
             localStorage.setItem("token",JSON.stringify(res.data.token))
             router.push("/main/home")
         }

@@ -13,7 +13,7 @@ const Layout = ({children}:{children: React.ReactNode}) => {
             <NavBar/>
             <div className="relative w-full h-full overflow-hidden">
                 {children}
-                <NotesProvider/>
+                <NotesProvider vaultSession={session}/>
             </div>
         </div>
     )

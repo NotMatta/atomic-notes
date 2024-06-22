@@ -1,11 +1,11 @@
 import { Button } from "../ui/button"
 import { Check, Plus } from "lucide-react"
 
-const NoteButton = ({Toggle,isActive}:any) => {
+const NoteButton = ({Toggle,HandleSave,isActive}:any) => {
     return (
         <div className="relative z-30">
             <div className={"absolute top-[-8px] right-0 -z-10 duration-200 " + (isActive? "-translate-y-[200%]" : "opacity-0")}>
-                <Button size="icon" className="rounded-full">
+                <Button onClick={() => HandleSave()} size="icon" className="rounded-full">
                     <Check />
                 </Button>
             </div>

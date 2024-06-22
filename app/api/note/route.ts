@@ -39,6 +39,7 @@ const POST = async (req: Request) => {
         return Response.json({msg: "Unvalid token"})
     }
     const notes = await req.json()
+    console.log(notes)
     const Notes = await prisma.note.createMany({
         data: notes.map( (note:any) => {return {
             noteTitle:note.noteTitle,

@@ -26,7 +26,12 @@ const ProfileToggle = () => {
                     <p>Settings</p>
                 </DropdownMenuItem>
                 <DropdownMenuItem 
-                    onClick={() => {localStorage.removeItem("token"),router.push("/auth/login")}}
+                    onClick={() => {
+                        localStorage.removeItem("token");
+                        localStorage.removeItem("vaultTags")
+                        localStorage.removeItem("vaultName")
+                        router.push("/auth/login")
+                    }}
                     className="flex items-center gap-2">
                     <LogOut className="h-[1.2rem] w-[1.2rem]"/>
                     <p>Log out </p>
