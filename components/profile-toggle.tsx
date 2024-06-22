@@ -1,5 +1,5 @@
 "use client"
-import { Settings, UserRound } from "lucide-react"
+import { LogOut, Settings, UserRound } from "lucide-react"
 import { Button } from "./ui/button"
 import {
   DropdownMenu,
@@ -7,8 +7,12 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { useRouter } from "next/navigation"
 
 const ProfileToggle = () => {
+
+    const router = useRouter()
+
     return (
         <DropdownMenu>
             <DropdownMenuTrigger className="outline-none" asChild>
@@ -20,6 +24,12 @@ const ProfileToggle = () => {
                 <DropdownMenuItem className="flex items-center gap-2">
                     <Settings className="h-[1.2rem] w-[1.2rem]"/>
                     <p>Settings</p>
+                </DropdownMenuItem>
+                <DropdownMenuItem 
+                    onClick={() => {localStorage.removeItem("token"),router.push("/auth/login")}}
+                    className="flex items-center gap-2">
+                    <LogOut className="h-[1.2rem] w-[1.2rem]"/>
+                    <p>Log out </p>
                 </DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>

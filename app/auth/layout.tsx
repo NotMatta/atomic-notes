@@ -1,6 +1,13 @@
+"use client"
+
 import { ModeToggle } from "@/components/mode-toggle"
+import useAuth from "@/components/hooks/useAuth"
+
 
 const Layout = ({children} : {children:React.ReactNode}) => {
+
+    const {session,setRefresh} = useAuth()
+
     return (
         <div className="w-full h-full flex">
             <div className="border w-3/5 box-border p-4 flex flex-col gap-3">

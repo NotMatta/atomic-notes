@@ -24,6 +24,6 @@ export const POST = async (req:Request) => {
 
     const token = jwt.sign(payload,secret,{expiresIn:expiration})
 
-    return Response.json({token})
+    return Response.json({msg:"Logged in!",token})
     
 }
