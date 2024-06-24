@@ -10,12 +10,17 @@ import {
 } from "@/components/ui/select"
 
 
-const NoteElement = ({Notes,setNotes,vaultTags,index,Toggle}:any) => {
+const NoteElement = ({Notes,setNotes,HandleDelete,vaultTags,index,Toggle}:any) => {
 
     return (
         <div 
             className={"relative bg-background p-4 duration-200 flex flex-col " + (Notes[index].display == "normal"? 'w-4/5 border min-h-[500px] h-[500px] max-h-[650px] rounded-xl' : "w-full h-full")}>
             <div className="absolute top-2 right-2 flex gap-2">
+                {Notes[index].status != "new" &&
+                <Button variant="outline"
+                        className="text-red-700 border-red-700 hover:bg-red-700"
+                        onClick={() => HandleDelete(Notes[index].id,index)}
+                        >Delete Note</Button>}
                 <Select onValueChange={(value) => setNotes(Notes.map((el,i) => {
                     if (i == index){
                         return {...el,tagIndex: value}

@@ -6,8 +6,12 @@ import NoteButton from "./note-components/note-button"
 import axios from "axios"
 import NotesContext from "./note-components/notesContext"
 import RenderContext from "./note-components/renderContext"
+import { useRouter } from "next/navigation"
 
 const NotesProvider = ({vaultSession} : any) => {
+
+    const router = useRouter()
+
     const Husk = {
         noteTitle: "Some Note",
         noteText: "weird ahh text in a note",
@@ -38,9 +42,8 @@ const NotesProvider = ({vaultSession} : any) => {
         if(vaultSession.status == "authenticated"){
             setVaultTags(vaultSession.vaultTags)
         }
-    },[render,activeNotes,vaultSession])
+    },[render,activeNotes,setRender,vaultSession])
     
-
     const HandleSave = async () => {
         const token = vaultSession.token
         let notesToCreate : any = []
@@ -64,14 +67,18 @@ const NotesProvider = ({vaultSession} : any) => {
             const res = await axios.post("/api/note",notesToCreate,{
                 headers: {Authorization : "Bearer " + token}
             })
-            console.log(res.data)
+            alert(res.data.msg)
         }
         if (notesToUpdate.length > 0){
             const res = await axios.put("/api/note",notesToUpdate,{
                 headers: {Authorization : "Bearer " + token}
             })
-            console.log(res.data)
+            alert(res.data.msg)
         }
+        setActiveNotes([])
+        router.push("/main/home")
+        setTimeout(() => console.log("msg after 2s"), 2000)
+        setRender(true)
     }
 
     const Toggle = {
@@ -105,6 +112,7 @@ const NotesProvider = ({vaultSession} : any) => {
                     newNotes.push(Note)
                 }
             })
+            console.log(newNotes)
             setActiveNotes(newNotes)
             setRender(true)
         },
@@ -124,13 +132,28 @@ const NotesProvider = ({vaultSession} : any) => {
             setRender(true)
         }
     }
+    const HandleDelete = async (noteId,index) => {
+        const token = vaultSession.token
+        const res = await axios.delete("/api/note",{
+            params:{
+                noteId: noteId
+            },
+            headers: {
+                Authorization: ("Bearer "+token)
+            }
+        })
+        alert(res.data.msg)
+        router.push("/main/home")
+        Toggle.delete(index)
+        setRender(true)
+    }
 
     return (
         <div className={"absolute w-full h-full bot-0"}>
             <div className={"static w-full min-w-full min-h-full flex justify-center items-center gap-2 flex-wrap h-full duration-200 z-50 " + (isEditing? "-translate-y-full":"")}>
                 {activeNotes.map((Note,key) => {
                     if (Note.display != "minimized"){
-                        return <NoteElement key={key} vaultTags={vaultTags} Notes={activeNotes} setNotes={setActiveNotes} index={key} Toggle={Toggle}/>
+                        return <NoteElement key={key} vaultTags={vaultTags} Notes={activeNotes} setNotes={setActiveNotes} index={key} Toggle={Toggle} HandleDelete={HandleDelete}/>
                     }
                 })}
             </div>
